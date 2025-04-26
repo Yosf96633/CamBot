@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import SessProvider from "@/context/SessProvider";
 
 export const metadata: Metadata = {
   title: "CamBot",
   description: "AI Chatbot - Resolve Campus Query",
-  icons:{
-    icon:"gif.gif"
-  }
+  icons: {
+    icon: "gif.gif",
+  },
 };
 
 export default function RootLayout({
@@ -16,10 +17,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-     
-      >
-        {children}
+      <body>
+        <SessProvider>{children}</SessProvider>
       </body>
     </html>
   );

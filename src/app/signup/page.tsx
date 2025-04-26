@@ -1,11 +1,12 @@
 // app/signup/page.tsx or app/(auth)/signup/page.tsx depending on your routing structure
 
 'use client';
-
+import {signIn} from "next-auth/react"
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useState, FormEvent } from "react";
 import Image from "next/image";
+import { json } from "stream/consumers";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -113,6 +114,12 @@ export default function SignUpPage() {
           {/* Google Sign-Up */}
           <button
             type="button"
+            onClick={()=>{
+              signIn("google" , {
+                callbackUrl:"/"
+
+              })
+            }}
             className="flex items-center cursor-pointer justify-center gap-2 w-full border border-gray-300 rounded-md px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
           >
            <Image src="/google.svg" width={20} height={20} alt="logo" />
@@ -121,7 +128,18 @@ export default function SignUpPage() {
 
           {/* Submit Button */}
           <button
-            type="submit"
+            onClick={async ()=>{
+                 const response = await fetch(`` , {
+                  method:"POST",
+                  headers:{
+                    "Content-Type" : "application/json"
+                  },
+                  body:JSON.stringify({name , email , password , role})
+                 }) 
+                 const result = await response.json()
+
+                 console.log(result)
+            }}
             className="w-full cursor-pointer rounded-md bg-black px-4 py-2 text-white text-sm font-medium hover:bg-gray-900 transition-colors"
           >
             Sign Up
