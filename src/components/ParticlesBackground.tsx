@@ -3,8 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
-
+import { useSession } from "next-auth/react";
 interface Props {
   title?: string;
   particleCount?: number;
@@ -196,7 +195,7 @@ export default function ParticlesBackground({
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-white">
             {title}
           </h1>
-          <p className=" italic font-extralight text-lg max-w-5xl">
+          <p className=" italic font-extralight text-white text-lg max-w-5xl">
             Cambot is a virtual campus assistant that leverages artificial
             intelligence to respond to student inquiries. With capabilities to
             understand natural language and deliver instant, relevant responses,

@@ -7,10 +7,11 @@ export const POST = async (req: NextRequest) => {
   try {
     await connectDB()
     const body = await req.json()
+
     const result = SignUpSchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json(
-        { sucess: false, message: `Enter valid credentials` },
+        { success: false, message: `Enter valid credentials` },
         { status: 400 }
       );
     }
@@ -32,18 +33,18 @@ export const POST = async (req: NextRequest) => {
     });
     if (!user) {
       return NextResponse.json(
-        { sucess: false, message: `Error while sign up user` },
+        { success: false, message: `Error while sign up user` },
         { status: 400 }
       );
     }
     return NextResponse.json(
-      { sucess: true, message: `Sign up successfull` },
+      { success: true, message: `Sign up successfull` },
       { status: 200 }
     );
   } catch (error) {
     console.log(`Error at sign-up POST route -> ${error}`);
     return NextResponse.json(
-      { sucess: false, message: `Internal server error` },
+      { success: false, message: `Internal server error` },
       { status: 500 }
     );
   }

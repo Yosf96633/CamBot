@@ -3,28 +3,32 @@
 import { Eye, EyeOff } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, FormEvent } from 'react';
-import useStore from '@/store/store';
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { toast } from 'sonner';
 
 function Page() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, setUserEmail } = useStore();
+
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('Login credentials:', { email, password });
-    setUserEmail(email);
-    login();
-
-    setEmail('');
-    setPassword('');
-  };
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+       try {
+            if(!email || !password){
+              toast(`Please provide credentials`);
+            }
+           await signIn("credentials" , {email , password , callbackUrl:"/chat"})
+            
+       } catch (error) {
+              console.log(`Error at Login page -> ` , error)
+       }
+  }
+  
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-white p-6 md:p-10 text-black">
@@ -53,7 +57,7 @@ function Page() {
               <input
                 id="email"
                 type="email"
-                required
+                
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="johndoe@example.com"
@@ -69,7 +73,7 @@ function Page() {
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  required
+                  
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="*********"
@@ -99,6 +103,9 @@ function Page() {
           </div>
           <button
             type="button"
+            onClick={()=>{
+              signIn("google" , {callbackUrl:"/chat"})
+            }}
             className="flex items-center cursor-pointer justify-center gap-2 w-full border border-gray-300 rounded-md px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
           >
             <Image src="/google.svg" width={20} height={20} alt="logo" />
