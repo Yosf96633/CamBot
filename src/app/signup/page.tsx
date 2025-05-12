@@ -14,7 +14,6 @@ export default function SignUpPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("student");
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -103,20 +102,7 @@ export default function SignUpPage() {
           </div>
 
           {/* Role Field */}
-          <div className="grid gap-2">
-            <label htmlFor="role" className="text-sm font-medium text-black">
-              Role
-            </label>
-            <select
-              id="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full rounded-md border cursor-pointer border-gray-300 px-3 py-2 text-sm bg-white text-black shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-            >
-              <option value="student">Student</option>
-              <option value="faculty">Faculty</option>
-            </select>
-          </div>
+    
           <button
             onClick={async () => {
               const response = await fetch(`/api/sign-up`, {
@@ -124,7 +110,7 @@ export default function SignUpPage() {
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name, email, password, role }),
+                body: JSON.stringify({ name, email, password }),
               });
               const result = await response.json();
               if (result.success) {

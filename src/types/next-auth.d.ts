@@ -11,14 +11,14 @@ declare module "next-auth" {
     _id?: string;
     image?: string;
     name?: string;
-    role?: "student" | "faculty";
+  
   }
   interface Session {
     user: {
       _id?: string;
       image?: string;
       name?: string;
-      role?: "student" | "faculty";
+     
     } & DefaultSession["user"];
   }
 }
@@ -27,6 +27,5 @@ declare module "next-auth/jwt" {
     _id?: string;
     image?: string;
     name?: string;
-    role?: "student" | "faculty";
   }
 }

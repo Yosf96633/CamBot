@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+
 interface Props {
   title?: string;
   particleCount?: number;

@@ -15,7 +15,7 @@ export const POST = async (req: NextRequest) => {
         { status: 400 }
       );
     }
-    const { name, email, password, role } = result.data;
+    const { name, email, password } = result.data;
     const isExist = await userModel.findOne({ email: email });
     if (isExist) {
       return NextResponse.json(
@@ -29,7 +29,6 @@ export const POST = async (req: NextRequest) => {
       name: name,
       email: email,
       password: hashPassword,
-      role: role,
     });
     if (!user) {
       return NextResponse.json(

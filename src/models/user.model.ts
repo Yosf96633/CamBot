@@ -4,7 +4,6 @@ interface IUser extends Document {
   name: string;
   email: string;
   password?: string;
-  role: "student" | "faculty";
 }
 
 const UserSchema = new Schema<IUser>({
@@ -19,12 +18,6 @@ const UserSchema = new Schema<IUser>({
     trim: true,
     unique: true,
   },
-  role: {
-    type: String,
-    required: false,
-    enum: ["student", "faculty"],
-  },
-
   password: {
     type: String,
     required: false,
